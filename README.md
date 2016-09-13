@@ -1,55 +1,71 @@
 ## Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+### Steps to Run the Application
 
-To get started, check out the repository and inspect the code.
-
-### Getting started
-
-####Part 1: Optimize PageSpeed Insights score for index.html
-
-Some useful tips to help you get started:
-
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+1.  Check out the repository [here](https://github.com/acct252000/frontend-nanodegree-mobile-portfolio)
+2.  To inspect the site on your phone, you can run a local server
 
   ```bash
   $> cd /path/to/your-project-folder
   $> python -m SimpleHTTPServer 8080
   ```
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
+3. Open your browser and visit localhost:8080
+4. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.  Open a new terminal window.
 
   ``` bash
   $> cd /path/to/your-project-folder
   $> ./ngrok http 8080
   ```
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+5. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+6.  To access the pizza screen for pizza scrolling and resizing, click on the Cam's Pizzeria link.
 
-####Part 2: Optimize Frames per Second in pizza.html
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+### Optimizing index.html
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
+Steps Taken:
+1.  Compressed all images using ImageOptim
+2.  Added async to analytics.js script tag
+3.  Limited print.css with media="print" tag
+4.  Inlined style.css file into body of index.html using `<script>` tags
+5.  Minified index.html file
+6.  Created pizzeria_small.jpg of pizzeria.jpg resized to 115px and changed src to smaller file.
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
+### Optimizing pizza views
 
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+1.  Moved `document.body.scrollTop` measurement out of iterative loop (starting at line 515)
+
+```
+ var items = document.querySelectorAll('.mover');
+  var scrollTopMeasure = document.body.scrollTop/1250;
+  for (var i = 0; i < items.length; i++) {
+    var phase = Math.sin((scrollTopMeasure) + (i % 5));
+    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+  }
+  ```
+
+
+  2. This function was changed to account for all `.randomPizzaContainers` changing by the same amount,
+  therefore the dx and newwidth calculations were taken out of the iterative loop and calculated just once.
+  Additionally, the `.querySelectorAll` in the iterative loop was taken out and called once to populate the array
+  which was then cycled in the foorloop as opposed to repeated calls to `document.querySelectorAll`.
+
+```
+  function changePizzaSizes(size) {
+-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
+-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
+-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
++    var dx = determineDx(document.querySelector(".randomPizzaContainer"),size);
++    var newwidth = (document.querySelector(".randomPizzaContainer").offsetWidth + dx) + 'px';
++    var pizzaContainers = document.querySelectorAll(".randomPizzaContainer");
++     for (var i = 0; i < pizzaContainers.length; i++) {
++      //var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
++      pizzaContainers[i].style.width = newwidth;
+```
+
+### Known Issues
+index-nonmin.html was added; index was not changed to index.min due to specification of index.html in Project Rubric.   Many steps in how to run successfully of course copied from README in original project [here](https://github.com/udacity/frontend-nanodegree-mobile-portfolio)
