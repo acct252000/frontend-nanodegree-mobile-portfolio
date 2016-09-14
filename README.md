@@ -42,7 +42,7 @@ Steps Taken:
 
 ### Optimizing pizza views
 
-1.  Moved `document.body.scrollTop` measurement out of iterative loop (starting at line 515).  Moved `items.length` into variable ouside the loops and declared the phase variable outside the loop  Change `querySelectorAll` to `getElementsByClassName`
+- Moved `document.body.scrollTop` measurement out of iterative loop (starting at line 515).  Moved `items.length` into variable ouside the loops and declared the phase variable outside the loop  Change `querySelectorAll` to `getElementsByClassName`
 
 ```
   var items = document.getElementsByClassName('mover');
@@ -55,7 +55,7 @@ Steps Taken:
         
     }
   ```
-2.  Declared variable outside of loop  Changed `querySelector` to `getElementById` and moved outside of loop, and limited number of pizzas required by looking at screen height.
+-  Declared variable outside of loop  Changed `querySelector` to `getElementById` and moved outside of loop, and limited number of pizzas required by looking at screen height.
 
 ```
   document.addEventListener('DOMContentLoaded', function() {
@@ -82,7 +82,7 @@ Steps Taken:
     updatePositions();
 ```
 
-3. This function was changed to account for all `.randomPizzaContainers` changing by the same amount,
+- This function was changed to account for all `.randomPizzaContainers` changing by the same amount,
 therefore the dx and newwidth calculations were taken out of the iterative loop and calculated just once.
 Additionally, the `.querySelectorAll` in the iterative loop was taken out and called once to populate the array
 which was then cycled in the foorloop as opposed to repeated calls to `document.querySelectorAll`.
@@ -101,7 +101,7 @@ which was then cycled in the foorloop as opposed to repeated calls to `document.
 +      pizzaContainers[i].style.width = newwidth;
 ```
 
-4.  `querySelector` was changed to `getElementById` in the following function.
+-  `querySelector` was changed to `getElementById` in the following function.
 
 ```
     function changeSliderLabel(size) {
