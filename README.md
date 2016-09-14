@@ -27,11 +27,17 @@
 ### Optimizing index.html
 
 Steps Taken:
+
 1.  Compressed all images using ImageOptim
+
 2.  Added async to analytics.js script tag
+
 3.  Limited print.css with media="print" tag
+
 4.  Inlined style.css file into body of index.html using `<script>` tags
+
 5.  Minified index.html file
+
 6.  Created pizzeria_small.jpg of pizzeria.jpg resized to 115px and changed src to smaller file.
 
 ### Optimizing pizza views
@@ -49,7 +55,7 @@ Steps Taken:
         
     }
   ```
-  2.  Declared variable outside of loop  Changed `querySelector` to `getElementById` and moved outside of loop, and limited number of pizzas required by looking at screen height.
+2.  Declared variable outside of loop  Changed `querySelector` to `getElementById` and moved outside of loop, and limited number of pizzas required by looking at screen height.
 
 ```
   document.addEventListener('DOMContentLoaded', function() {
@@ -76,10 +82,10 @@ Steps Taken:
     updatePositions();
 ```
 
-  3. This function was changed to account for all `.randomPizzaContainers` changing by the same amount,
-  therefore the dx and newwidth calculations were taken out of the iterative loop and calculated just once.
-  Additionally, the `.querySelectorAll` in the iterative loop was taken out and called once to populate the array
-  which was then cycled in the foorloop as opposed to repeated calls to `document.querySelectorAll`.
+3. This function was changed to account for all `.randomPizzaContainers` changing by the same amount,
+therefore the dx and newwidth calculations were taken out of the iterative loop and calculated just once.
+Additionally, the `.querySelectorAll` in the iterative loop was taken out and called once to populate the array
+which was then cycled in the foorloop as opposed to repeated calls to `document.querySelectorAll`.
 
 ```
   function changePizzaSizes(size) {
@@ -95,7 +101,7 @@ Steps Taken:
 +      pizzaContainers[i].style.width = newwidth;
 ```
 
-3.  `querySelector` was changed to `getElementById` in the following function.
+4.  `querySelector` was changed to `getElementById` in the following function.
 
 ```
     function changeSliderLabel(size) {
