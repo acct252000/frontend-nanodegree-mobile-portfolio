@@ -67,5 +67,26 @@ Steps Taken:
 +      pizzaContainers[i].style.width = newwidth;
 ```
 
+### Steps to Check Workflow Optimization
+
+1.  Ensure node package manager is installed on your machine.  If not installed, see website [here](https://nodejs.org)
+
+2.  If gulp is not installed globally on your machine, run the command  `npm install -g gulp`.  You may want to preface this with `sudo` on Mac, password may be required.
+
+3.  In terminal, navigate to the gulp folder in the local version of the repository.
+
+4.  Type `npm install` to install all of the dependencies.
+
+5.  Perform the workflow tasks in the following order by entering these commands in terminal
+
+    1.  `gulp resizeImage`
+    2.  `gulp minImages`
+    3.  `gulp minifyHTML`
+
+6. Resulting files are in the dist folder.
+
+
 ### Known Issues
-index-nonmin.html was added; index was not changed to index.min due to specification of index.html in Project Rubric.   Many steps in how to run successfully of course copied from README in original project [here](https://github.com/udacity/frontend-nanodegree-mobile-portfolio)
+index-nonmin.html was added; index was not changed to index.min due to specification of index.html in Project Rubric.   Many steps in how to run successfully of course copied from README in original project [here.](https://github.com/udacity/frontend-nanodegree-mobile-portfolio)
+
+Workflow management was added after original project; files in dist are not exact matches to those used in project.
