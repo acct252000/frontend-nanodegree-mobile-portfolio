@@ -36,19 +36,47 @@ Steps Taken:
 
 ### Optimizing pizza views
 
-1.  Moved `document.body.scrollTop` measurement out of iterative loop (starting at line 515)
+1.  Moved `document.body.scrollTop` measurement out of iterative loop (starting at line 515).  Moved `items.length` into variable ouside the loops and declared the phase variable outside the loop  Change `querySelectorAll` to `getElementsByClassName`
 
 ```
- var items = document.querySelectorAll('.mover');
-  var scrollTopMeasure = document.body.scrollTop/1250;
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((scrollTopMeasure) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
+  var items = document.getElementsByClassName('mover');
+    var itemsLength = items.length;
+    var scrollTopMeasure = document.body.scrollTop / 1250;
+    var phase;
+    for (var i = 0; i < itemsLength; i++) {
+        phase = Math.sin((scrollTopMeasure) + (i % 5));
+        items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+        
+    }
   ```
+  2.  Declared variable outside of loop  Changed `querySelector` to `getElementById` and moved outside of loop, and limited number of pizzas required by looking at screen height.
 
+```
+  document.addEventListener('DOMContentLoaded', function() {
+    var cols = 8;
 
-  2. This function was changed to account for all `.randomPizzaContainers` changing by the same amount,
+    //Calculates the maximum number of rows required
+    var rows = window.screen.height/100 +1;
+    var numberOfPizzasRequired = cols * rows;
+    console.log(rows + 'is number of rows');
+    console.log(numberOfPizzasRequired + 'is number of Pizzas');
+    var s = 256;
+    var elem;
+    var pizzaGrid = document.getElementById('movingPizzas1');
+    for (var i = 0; i < 200; i++) {
+        elem = document.createElement('img');
+        elem.className = 'mover';
+        elem.src = "images/pizza.png";
+        elem.style.height = "100px";
+        elem.style.width = "73.333px";
+        elem.basicLeft = (i % cols) * s;
+        elem.style.top = (Math.floor(i / cols) * s) + 'px';
+        pizzaGrid.appendChild(elem);
+    }
+    updatePositions();
+```
+
+  3. This function was changed to account for all `.randomPizzaContainers` changing by the same amount,
   therefore the dx and newwidth calculations were taken out of the iterative loop and calculated just once.
   Additionally, the `.querySelectorAll` in the iterative loop was taken out and called once to populate the array
   which was then cycled in the foorloop as opposed to repeated calls to `document.querySelectorAll`.
@@ -65,6 +93,26 @@ Steps Taken:
 +     for (var i = 0; i < pizzaContainers.length; i++) {
 +      //var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
 +      pizzaContainers[i].style.width = newwidth;
+```
+
+3.  `querySelector` was changed to `getElementById` in the following function.
+
+```
+    function changeSliderLabel(size) {
+        switch (size) {
+            case "1":
+                document.getElementById("pizzaSize").innerHTML = "Small";
+                return;
+            case "2":
+                document.getElementById("pizzaSize").innerHTML = "Medium";
+                return;
+            case "3":
+                document.getElementById("pizzaSize").innerHTML = "Large";
+                return;
+            default:
+                console.log("bug in changeSliderLabel");
+        }
+    }
 ```
 
 ### Steps to Check Workflow Optimization
