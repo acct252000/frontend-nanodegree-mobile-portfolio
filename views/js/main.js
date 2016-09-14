@@ -549,12 +549,10 @@ document.addEventListener('DOMContentLoaded', function() {
     //Calculates the maximum number of rows required
     var rows = window.screen.height / 100 + 1;
     var numberOfPizzasRequired = cols * rows;
-    console.log(rows + 'is number of rows');
-    console.log(numberOfPizzasRequired + 'is number of Pizzas');
     var s = 256;
     var elem;
     var pizzaGrid = document.getElementById('movingPizzas1');
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < numberOfPizzasRequired; i++) {
         elem = document.createElement('img');
         elem.className = 'mover';
         elem.src = "images/pizza.png";
